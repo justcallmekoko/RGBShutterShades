@@ -1,25 +1,33 @@
-
-
 #include "Patterns.h"
+#include "XYmap.h"
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(Pixels, PIN, NEO_GRB + NEO_KHZ800);
 
 Patterns patternObj;
+XYmap mapObj;
 
 void setup() {
+  Serial.begin(115200);
+  
   strip.begin();
   strip.setBrightness(50);
   strip.show();
+
+  // Test XY function
+  strip.setPixelColor(mapObj.XY(1, 0), strip.Color(255, 255, 255));
+  strip.setPixelColor(mapObj.XY(1, 1), strip.Color(255, 255, 255));
+  strip.setPixelColor(mapObj.XY(0, 1), strip.Color(255, 255, 255));
+  strip.show();
+  delay(5000);
 }
 
-void loop() {
-
-  patternObj.Twinkle();
+void loop()
+{
+  //patternObj.initPattern(DASH);
+  //patternObj.initPattern(PULSE);
+  patternObj.initPattern(TRACER);
+  //patternObj.initPattern(TWINKLE);
   //patternObj.colorWipe(strip.Color(255, 0, 0), 50); // Red
-  //colorWipe(strip.Color(255, 0, 0), 50); // Red
-  //colorWipe(strip.Color(0, 255, 0), 50); // Green
-  //colorWipe(strip.Color(0, 0, 255), 50); // Blue
-  //colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
 
   //theaterChase(strip.Color(127, 127, 127), 50); // White
   //theaterChase(strip.Color(127, 0, 0), 50); // Red
