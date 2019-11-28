@@ -1,15 +1,19 @@
 #include "Patterns.h"
 #include "XYmap.h"
+#include "ButtonInput.h"
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(Pixels, PIN, NEO_GRB + NEO_KHZ800);
 
 Patterns patternObj;
 XYmap mapObj;
+ButtonInput buttonObj;
 
 void setup() {
   Serial.begin(115200);
 
   //webInterfaceObj.initWebInterface();
+
+  buttonObj.initButtonInput();
   
   strip.begin();
   strip.setBrightness(50);
@@ -20,17 +24,18 @@ void setup() {
   strip.setPixelColor(mapObj.XY(1, 1), strip.Color(255, 255, 255));
   strip.setPixelColor(mapObj.XY(0, 1), strip.Color(255, 255, 255));
   strip.show();
-  delay(5000);
+  delay(2000);
 }
 
 void loop()
 {
-
+  buttonObj.checkPatternChange();
   //webInterfaceObj.main();
 
   //patternObj.initPattern(DASH);
   //patternObj.initPattern(PULSE);
   patternObj.initPattern(patternObj.currentPattern);
+  //patternObj.Rainbow2();
   //patternObj.initPattern(TWINKLE);
   //patternObj.colorWipe(strip.Color(255, 0, 0), 50); // Red
 

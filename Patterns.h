@@ -14,12 +14,16 @@
 #define Pixels 68
 #define VIRTUAL_NUM_LEDS (matrix_x * matrix_y)
 
+
+#define NUM_PATTERN 6
+
 // Pattern definitions
-#define COLOR_WIPE 0
-#define DASH 1
+#define DASH 0
+#define FALLING_RAINBOW 1
 #define PULSE 2
-#define TWINKLE 3
-#define TRACER 4
+#define RADIATE_RAINBOW 3
+#define TWINKLE 4
+#define TRACER 5
 
 extern Adafruit_NeoPixel strip;
 extern XYmap mapObj;
@@ -38,6 +42,8 @@ class Patterns
     int current_fade_itter = 1;
     int current_x = -1;
     int current_y = 0;
+    int wheel_pos = 255;
+    int wheel_speed = 1; // lower = slower
     bool increasing = true;
     bool show_led = true;
     float redStates[Pixels];
@@ -48,8 +54,10 @@ class Patterns
     float greenStates2[SHADES_TABLE_SIZE];
     float fadeRate= 0.80;
 
+    uint32_t Wheel(byte WheelPos);
+
   public:
-    uint8_t currentPattern = TRACER;
+    uint8_t currentPattern = 0;
     
     // Color presets
     float scanning[3] = {255, 6, 0};
@@ -62,6 +70,9 @@ class Patterns
     void Dash(int r, int g, int b);
     void initPattern(uint8_t pattern);
     void Pulse(int r, int g, int b);
+    void Rainbow1();
+    void Rainbow2();
+    void Rainbow3();
     void resetWheel();
     void Twinkle();
     void Tracer(int r, int g, int b);

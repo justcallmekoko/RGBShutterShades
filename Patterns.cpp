@@ -100,14 +100,10 @@ void Patterns::Dash(int r, int g, int b)
   }
 }
 
+// Adjust values specific for a certain pattern
 void Patterns::initPattern(uint8_t pattern)
 {
-  if (pattern == COLOR_WIPE)
-  {
-    this->fade_delay = 20;
-    this->fadeRate = 0.90;
-  }
-  else if (pattern == PULSE)
+  if (pattern == PULSE)
   {
     this->fade_delay = 20;
     this->fadeRate = 0.90;
@@ -133,8 +129,23 @@ void Patterns::initPattern(uint8_t pattern)
     this->fadeRate = 0.92;
     this->Dash(this->serving[0], this->serving[1], this->serving[2]);
   }
+  else if (pattern == FALLING_RAINBOW)
+  {
+    this->ring_speed = 10;
+    this->fade_delay = 2;
+    this->fadeRate = 0.90;
+    this->Rainbow2();
+  }
+  else if (pattern == RADIATE_RAINBOW)
+  {
+    this->ring_speed = 10;
+    this->fade_delay = 2;
+    this->fadeRate = 0.90;
+    this->Rainbow3();
+  }
 }
 
+// Pulse a color on and off
 void Patterns::Pulse(int r, int g, int b)
 {
   if (this->show_led)
@@ -191,6 +202,52 @@ void Patterns::Pulse(int r, int g, int b)
     
     strip.show();
   }
+}
+
+// idefk rainbow
+void Patterns::Rainbow1()
+{
+  uint16_t i, j;
+  this->current_itter++;
+  if (current_itter >= 256)
+    current_itter = 0;
+    
+  for(i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, Wheel((i+current_itter) & 255));
+  }
+  strip.show();
+  delay(ring_speed);
+}
+
+// Falling rainbow
+void Patterns::Rainbow2()
+{
+  this->current_itter++;
+  if (current_itter >= 256)
+    current_itter = 0;
+    
+  for(uint16_t i = 0; i < matrix_y; i++) {
+    for (int x = 0; x < matrix_x; x++)
+      strip.setPixelColor(mapObj.XY(x, i), Wheel(((strip.numPixels() / (i + 1))+current_itter) & 255));
+  }
+  strip.show();
+  delay(ring_speed);
+}
+
+// Radiating rainbow
+void Patterns::Rainbow3()
+{
+  for(uint16_t i = 0; i < matrix_y; i++) {
+    for (int x = 0; x < matrix_x; x++)
+      strip.setPixelColor(mapObj.XY(x, i), this->Wheel(((i * x) * 256 / 50 + this->wheel_pos) % 256));
+  }
+      
+  strip.show();
+  delay(ring_speed);
+
+  this->wheel_pos = this->wheel_pos + this->wheel_speed;
+  if (this->wheel_pos >= 256)
+    this->wheel_pos = 0;
 }
 
 void Patterns::resetWheel()
@@ -424,4 +481,17 @@ void Patterns::Tracer2(int r, int g, int b)
     
     //delay(10);
   }
+}
+
+uint32_t Patterns::Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
