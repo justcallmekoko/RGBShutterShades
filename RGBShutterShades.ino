@@ -8,6 +8,8 @@ XYmap mapObj;
 
 void setup() {
   Serial.begin(115200);
+
+  //webInterfaceObj.initWebInterface();
   
   strip.begin();
   strip.setBrightness(50);
@@ -23,9 +25,12 @@ void setup() {
 
 void loop()
 {
+
+  //webInterfaceObj.main();
+
   //patternObj.initPattern(DASH);
   //patternObj.initPattern(PULSE);
-  patternObj.initPattern(TRACER);
+  patternObj.initPattern(patternObj.currentPattern);
   //patternObj.initPattern(TWINKLE);
   //patternObj.colorWipe(strip.Color(255, 0, 0), 50); // Red
 
@@ -35,7 +40,6 @@ void loop()
 
   //rainbow(20);
   //theaterChaseRainbow(50);
-  //delay(1);
 }
 
 

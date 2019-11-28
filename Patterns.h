@@ -49,7 +49,7 @@ class Patterns
     float fadeRate= 0.80;
 
   public:
-    uint8_t currentPattern= 0;
+    uint8_t currentPattern = TRACER;
     
     // Color presets
     float scanning[3] = {255, 6, 0};

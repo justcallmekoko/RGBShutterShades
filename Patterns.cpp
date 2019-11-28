@@ -70,8 +70,8 @@ void Patterns::Dash(int r, int g, int b)
           temp_y = random(0, 5);
           
         current_y = temp_y;
-        Serial.print(" Y: ");
-        Serial.println(current_y);
+        //Serial.print(" Y: ");
+        //Serial.println(current_y);
       }
     
     
@@ -128,9 +128,9 @@ void Patterns::initPattern(uint8_t pattern)
   }
   else if (pattern == DASH)
   {
-    this->ring_speed = 2;
+    this->ring_speed = 3;
     this->fade_delay = 2;
-    this->fadeRate = 0.915;
+    this->fadeRate = 0.92;
     this->Dash(this->serving[0], this->serving[1], this->serving[2]);
   }
 }
@@ -286,10 +286,10 @@ void Patterns::Tracer(int r, int g, int b)
       if (this->current_y >= matrix_y)
         current_y = 0;
     
-      Serial.print("X: ");
-      Serial.print(current_x);
-      Serial.print(" Y: ");
-      Serial.println(current_y);
+      //Serial.print("X: ");
+      //Serial.print(current_x);
+      //Serial.print(" Y: ");
+      //Serial.println(current_y);
 
       // End XY Test
         
@@ -369,10 +369,10 @@ void Patterns::Tracer2(int r, int g, int b)
       if (this->current_y >= matrix_y)
         current_y = 0;
     
-      Serial.print("X: ");
-      Serial.print(current_x);
-      Serial.print(" Y: ");
-      Serial.println(current_y);
+      //Serial.print("X: ");
+      //Serial.print(current_x);
+      //Serial.print(" Y: ");
+      //Serial.println(current_y);
 
       // End XY Test
         
