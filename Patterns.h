@@ -15,7 +15,7 @@
 #define VIRTUAL_NUM_LEDS (matrix_x * matrix_y)
 
 
-#define NUM_PATTERN 6
+#define NUM_PATTERN 7
 
 // Pattern definitions
 #define DASH 0
@@ -24,6 +24,7 @@
 #define RADIATE_RAINBOW 3
 #define TWINKLE 4
 #define TRACER 5
+#define BIT_RACE 6
 
 extern Adafruit_NeoPixel strip;
 extern XYmap mapObj;
@@ -57,7 +58,8 @@ class Patterns
     uint32_t Wheel(byte WheelPos);
 
   public:
-    uint8_t currentPattern = 0;
+    uint8_t currentPattern = 0
+    ;
     
     // Color presets
     float scanning[3] = {255, 6, 0};
@@ -66,6 +68,7 @@ class Patterns
     float clicon[3] = {255, 255, 0};
     float purple[3] = {255, 0, 255};
 
+    void bitRace();
     void colorWipe(uint32_t c, uint8_t wait);
     void Dash(int r, int g, int b);
     void initPattern(uint8_t pattern);

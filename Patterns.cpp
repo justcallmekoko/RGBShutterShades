@@ -1,5 +1,97 @@
 #include "Patterns.h"
 
+void Patterns::bitRace()
+{
+  if (this->show_led)
+  {
+
+    this->current_itter++;
+    if (this->current_itter >= this->ring_speed * this->fade_delay)
+    {   
+      this->current_itter = 0;
+      this->current_pixel++;
+      if (this->current_pixel >= SHADES_TABLE_SIZE)
+        this->current_pixel = 0;
+
+
+
+      // XY Test
+      //current_x++;
+  
+      //if (this->current_x >= matrix_x)
+      //{
+      //current_x = 0;
+      int temp_y = random(0, 5);
+
+      // Don't choose the same Y as last time
+      while (temp_y == current_y)
+        temp_y = random(0, 5);
+        
+      current_y = temp_y;
+      //Serial.println(current_y);
+      //}
+
+      for (int y = 0; y < matrix_y; y++)
+      {
+        for (int x = 0; x < matrix_x; x++)
+        {
+          if (mapObj.XYtable[y][x] == 1)
+          {
+            //strip.setPixelColor(mapObj.XY(x, y), this->Wheel((256 / 50 + this->wheel_pos) % 256));
+            //strip.setPixelColor(mapObj.XY(x, y), this->Wheel((this->wheel_pos) & 255));
+            //strip.setPixelColor(mapObj.XY(x, y), this->Wheel((x * 256 / 50 + this->wheel_pos) % 256));
+            strip.setPixelColor(mapObj.XY(x, y), this->Wheel((x * 256 / 100 + this->wheel_pos) % 256));
+          }
+          else
+            strip.setPixelColor(mapObj.XY(x, y), 0, 0, 0);
+
+          
+          //uint16_t i = this->current_pixel;
+          //uint16_t i = mapObj.XY(current_x, current_y);
+          
+          //strip.setPixelColor(i, Wheel(((strip.numPixels() / i)+current_itter) & 255));
+          //strip.setPixelColor(i, Wheel((i+current_itter) & 255));
+          //strip.setPixelColor(i, this->Wheel((256 / 50 + this->wheel_pos) % 256));
+          //if (current_x != 0)
+          //  strip.setPixelColor(mapObj.XY(current_x - 1, current_y), 0, 0, 0);
+        }
+      }
+
+      for (int y = 0; y < matrix_y; y++)
+      {
+        for (int x = 0; x < matrix_x; x++)
+        {
+          if (mapObj.XYtable[y][x] == 1)
+          {
+            mapObj.XYtable[y][x] = 0;
+            if (x < matrix_x - 1){
+              mapObj.XYtable[y][x + 1] = 1;
+              x++;
+            }
+          }
+        }
+      }
+
+      uint16_t i = mapObj.XY(0, current_y);
+      //strip.setPixelColor(i, this->Wheel((256 / 50 + this->wheel_pos) % 256));
+      mapObj.XYtable[current_y][0] = 1;
+    }
+
+    
+    //strip.setPixelColor(0, 0, 255, 0);
+    //strip.setPixelColor(11, 255, 0, 0);
+    strip.show();
+    
+    this->current_fade_itter++;
+
+    this->wheel_pos = this->wheel_pos - this->wheel_speed;
+    if (this->wheel_pos < 0)
+      this->wheel_pos = 255;
+    
+    delay(ring_speed);
+  }
+}
+
 // Fill the dots one after the other with a color
 void Patterns::colorWipe(uint32_t c, uint8_t wait) {
   for(uint16_t i=0; i<strip.numPixels(); i++) {
@@ -134,6 +226,7 @@ void Patterns::initPattern(uint8_t pattern)
     this->ring_speed = 10;
     this->fade_delay = 2;
     this->fadeRate = 0.90;
+    this->wheel_speed = 1;
     this->Rainbow2();
   }
   else if (pattern == RADIATE_RAINBOW)
@@ -141,7 +234,15 @@ void Patterns::initPattern(uint8_t pattern)
     this->ring_speed = 10;
     this->fade_delay = 2;
     this->fadeRate = 0.90;
+    this->wheel_speed = 1;
     this->Rainbow3();
+  }
+  else if (pattern == BIT_RACE)
+  {
+    this->ring_speed = 4;
+    this->fade_delay = 2;
+    this->fadeRate = 0.90;
+    this->bitRace();
   }
 }
 
