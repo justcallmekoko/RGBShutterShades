@@ -10,7 +10,7 @@ void Patterns::bitRace()
     {   
       this->current_itter = 0;
       this->current_pixel++;
-      if (this->current_pixel >= SHADES_TABLE_SIZE)
+      if (this->current_pixel >= STS)
         this->current_pixel = 0;
 
 
@@ -92,6 +92,7 @@ void Patterns::bitRace()
   }
 }
 
+/*
 // Fill the dots one after the other with a color
 void Patterns::colorWipe(uint32_t c, uint8_t wait) {
   for(uint16_t i=0; i<strip.numPixels(); i++) {
@@ -100,6 +101,7 @@ void Patterns::colorWipe(uint32_t c, uint8_t wait) {
     delay(wait);
   }
 }
+*/
 
 void Patterns::Dash(int r, int g, int b)
 {  
@@ -111,7 +113,7 @@ void Patterns::Dash(int r, int g, int b)
     {
       this->current_fade_itter = 1;
       
-      for(uint16_t l = 0; l < SHADES_TABLE_SIZE; l++) {
+      for(uint16_t l = 0; l < STS; l++) {
         if (this->redStates2[l] > 1 || this->greenStates2[l] > 1 || this->blueStates2[l] > 1) {
           strip.setPixelColor(l, this->redStates2[l], this->greenStates2[l], this->blueStates2[l]);
           
@@ -144,7 +146,7 @@ void Patterns::Dash(int r, int g, int b)
     {   
       this->current_itter = 0;
       this->current_pixel++;
-      if (this->current_pixel >= SHADES_TABLE_SIZE)
+      if (this->current_pixel >= STS)
         this->current_pixel = 0;
 
 
@@ -195,13 +197,13 @@ void Patterns::Dash(int r, int g, int b)
 // Adjust values specific for a certain pattern
 void Patterns::initPattern(uint8_t pattern)
 {
-  if (pattern == PULSE)
+  /*if (pattern == PULSE)
   {
     this->fade_delay = 20;
     this->fadeRate = 0.90;
-    this->Pulse(this->clicon[0], this->clicon[1], this->clicon[2]);
-  }
-  else if (pattern == TWINKLE)
+    //this->Pulse(255, 255, 0);
+  }*/
+  if (pattern == TWINKLE)
   {
     this->fade_delay = 20;
     this->fadeRate = 0.80;
@@ -209,17 +211,17 @@ void Patterns::initPattern(uint8_t pattern)
   }
   else if (pattern == TRACER)
   {
-    this->ring_speed = 6;
+    this->ring_speed = 3;
     this->fade_delay = 2;
-    this->fadeRate = 0.985;
-    this->Tracer2(this->purple[0], this->purple[1], this->purple[2]);
+    this->fadeRate = 0.95;
+    this->Tracer2(255, 0, 255);
   }
   else if (pattern == DASH)
   {
     this->ring_speed = 3;
     this->fade_delay = 2;
     this->fadeRate = 0.92;
-    this->Dash(this->serving[0], this->serving[1], this->serving[2]);
+    this->Dash(0, 170, 255);
   }
   else if (pattern == FALLING_RAINBOW)
   {
@@ -246,6 +248,7 @@ void Patterns::initPattern(uint8_t pattern)
   }
 }
 
+/*
 // Pulse a color on and off
 void Patterns::Pulse(int r, int g, int b)
 {
@@ -296,16 +299,19 @@ void Patterns::Pulse(int r, int g, int b)
       Serial.print(greenStates[0]);
       Serial.print(" ");
       Serial.println(blueStates[0]); 
-      */   
+      */  
+      /* 
     }
     
     this->current_fade_itter++;
     
     strip.show();
   }
-}
+}*/
+
 
 // idefk rainbow
+/*
 void Patterns::Rainbow1()
 {
   uint16_t i, j;
@@ -319,6 +325,7 @@ void Patterns::Rainbow1()
   strip.show();
   delay(ring_speed);
 }
+*/
 
 // Falling rainbow
 void Patterns::Rainbow2()
@@ -354,13 +361,18 @@ void Patterns::Rainbow3()
 void Patterns::resetWheel()
 {
   for(uint16_t l = 0; l < Pixels; l++) {
-    this->redStates[l] = 0;
-    this->greenStates[l] = 0;
-    this->blueStates[l] = 0;
-    strip.setPixelColor(l, this->redStates[l], this->greenStates[l], this->blueStates[l]);
+    this->redStates2[l] = 0;
+    this->greenStates2[l] = 0;
+    this->blueStates2[l] = 0;
+    //this->redStates[l] = 0;
+    //this->greenStates[l] = 0;
+    //this->blueStates[l] = 0;
+    strip.setPixelColor(l, this->redStates2[l], this->greenStates2[l], this->blueStates2[l]);
+    //strip.setPixelColor(l, this->redStates[l], this->greenStates[l], this->blueStates[l]);
   }
   strip.show();
 }
+
 
 void Patterns::Twinkle()
 {
@@ -372,11 +384,13 @@ void Patterns::Twinkle()
       this->current_itter = 0;
   
       if (random(this->max_interval) != -1) {
-        uint16_t i = random(Pixels);
-        if (this->redStates[i] < 1 && this->greenStates[i] < 1 && this->blueStates[i] < 1) {
-          this->redStates[i] = random(256);
-          this->greenStates[i] = random(256);
-          this->blueStates[i] = random(256);
+        uint16_t x = random(matrix_x);
+        uint16_t y = random(matrix_y);
+        uint8_t i = mapObj.XY(x, y);
+        if (this->redStates2[i] < 1 && this->greenStates2[i] < 1 && this->blueStates2[i] < 1) {
+          this->redStates2[i] = random(256);
+          this->greenStates2[i] = random(256);
+          this->blueStates2[i] = random(256);
         }
       }
     }
@@ -385,25 +399,25 @@ void Patterns::Twinkle()
     {
       this->current_fade_itter = 1;
       for(uint16_t l = 0; l < Pixels; l++) {
-        if (this->redStates[l] > 1 || this->greenStates[l] > 1 || this->blueStates[l] > 1) {
-          strip.setPixelColor(l, this->redStates[l], this->greenStates[l], this->blueStates[l]);
+        if (this->redStates2[l] > 1 || this->greenStates2[l] > 1 || this->blueStates2[l] > 1) {
+          strip.setPixelColor(l, this->redStates2[l], this->greenStates2[l], this->blueStates2[l]);
           
-          if (this->redStates[l] > 1) {
-            this->redStates[l] = this->redStates[l] * this->fadeRate;
+          if (this->redStates2[l] > 1) {
+            this->redStates2[l] = this->redStates2[l] * this->fadeRate;
           } else {
-            this->redStates[l] = 0;
+            this->redStates2[l] = 0;
           }
           
-          if (this->greenStates[l] > 1) {
-            this->greenStates[l] = this->greenStates[l] * this->fadeRate;
+          if (this->greenStates2[l] > 1) {
+            this->greenStates2[l] = this->greenStates2[l] * this->fadeRate;
           } else {
-            this->greenStates[l] = 0;
+            this->greenStates2[l] = 0;
           }
           
-          if (this->blueStates[l] > 1) {
-            this->blueStates[l] = this->blueStates[l] * this->fadeRate;
+          if (this->blueStates2[l] > 1) {
+            this->blueStates2[l] = this->blueStates2[l] * this->fadeRate;
           } else {
-            this->blueStates[l] = 0;
+            this->blueStates2[l] = 0;
           }
           
         } else {
@@ -416,8 +430,9 @@ void Patterns::Twinkle()
   }
 }
 
-// mapObj.ShadesTable
 
+// mapObj.ShadesTable
+/*
 void Patterns::Tracer(int r, int g, int b)
 {  
   if (this->show_led)
@@ -499,6 +514,7 @@ void Patterns::Tracer(int r, int g, int b)
     //delay(10);
   }
 }
+*/
 
 
 void Patterns::Tracer2(int r, int g, int b)
@@ -510,7 +526,7 @@ void Patterns::Tracer2(int r, int g, int b)
     {   
       this->current_itter = 0;
       this->current_pixel++;
-      if (this->current_pixel >= SHADES_TABLE_SIZE)
+      if (this->current_pixel >= STS)
         this->current_pixel = 0;
 
 
@@ -547,7 +563,7 @@ void Patterns::Tracer2(int r, int g, int b)
     {
       this->current_fade_itter = 1;
       
-      for(uint16_t l = 0; l < SHADES_TABLE_SIZE; l++) {
+      for(uint16_t l = 0; l < STS; l++) {
         if (this->redStates2[l] > 1 || this->greenStates2[l] > 1 || this->blueStates2[l] > 1) {
           strip.setPixelColor(l, this->redStates2[l], this->greenStates2[l], this->blueStates2[l]);
           

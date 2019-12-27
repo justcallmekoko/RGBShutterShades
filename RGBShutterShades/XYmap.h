@@ -13,12 +13,13 @@
 #define XYmap_h
 
 #include <stdint.h>
+#include <avr/pgmspace.h>
 
 #define matrix_x 16
 #define matrix_y 5
 
 #define VIRTUAL_NUM_LEDS (matrix_x * matrix_y)
-#define SHADES_TABLE_SIZE 80
+#define STS 80
 #define LAST_VISIBLE_LED 67
 
 class XYmap

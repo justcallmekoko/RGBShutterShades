@@ -11,6 +11,8 @@ ButtonInput buttonObj;
 void setup() {
   Serial.begin(115200);
 
+  Serial.println(F("Running..."));
+  
   buttonObj.initButtonInput();
   
   strip.begin();

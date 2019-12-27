@@ -13,7 +13,7 @@ void ButtonInput::checkPatternChange()
       patternObj.currentPattern++;
       if (patternObj.currentPattern >= NUM_PATTERN)
         patternObj.currentPattern = 0;
-      Serial.print("Changing pattern: ");
+      //Serial.print("Changing pattern: ");
       Serial.println(patternObj.currentPattern);
       patternObj.resetWheel();
     }

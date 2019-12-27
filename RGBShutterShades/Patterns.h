@@ -10,21 +10,21 @@
 
 #define matrix_x 16
 #define matrix_y 5
-#define PIN D2
+#define PIN 3
 #define Pixels 68
 #define VIRTUAL_NUM_LEDS (matrix_x * matrix_y)
 
 
-#define NUM_PATTERN 7
+#define NUM_PATTERN 6
 
 // Pattern definitions
 #define DASH 0
 #define FALLING_RAINBOW 1
-#define PULSE 2
-#define RADIATE_RAINBOW 3
-#define TWINKLE 4
-#define TRACER 5
-#define BIT_RACE 6
+//#define PULSE 2
+#define RADIATE_RAINBOW 2
+#define TWINKLE 3
+#define TRACER 4
+#define BIT_RACE 5
 
 extern Adafruit_NeoPixel strip;
 extern XYmap mapObj;
@@ -47,38 +47,38 @@ class Patterns
     int wheel_speed = 1; // lower = slower
     bool increasing = true;
     bool show_led = true;
-    float redStates[Pixels];
-    float blueStates[Pixels];
-    float greenStates[Pixels];
-    float redStates2[SHADES_TABLE_SIZE];
-    float blueStates2[SHADES_TABLE_SIZE];
-    float greenStates2[SHADES_TABLE_SIZE];
+    //int redStates[Pixels]; // supposed to be float but need to save space
+    //int blueStates[Pixels];
+    //int greenStates[Pixels];
+    float redStates2[STS];
+    float blueStates2[STS];
+    float greenStates2[STS];
     float fadeRate= 0.80;
 
     uint32_t Wheel(byte WheelPos);
 
   public:
-    uint8_t currentPattern = 0
+    byte currentPattern PROGMEM = 0
     ;
     
     // Color presets
-    float scanning[3] = {255, 6, 0};
-    float deauthing[3] = {255, 6, 0};
-    float serving[3] = {0, 170, 255};
-    float clicon[3] = {255, 255, 0};
-    float purple[3] = {255, 0, 255};
+    //float scanning[3] = {255, 6, 0};
+    //float deauthing[3] = {255, 6, 0};
+    //float serving[3] = {0, 170, 255};
+    //float clicon[3] = {255, 255, 0};
+    //float purple[3] = {255, 0, 255};
 
     void bitRace();
-    void colorWipe(uint32_t c, uint8_t wait);
+    //void colorWipe(uint32_t c, uint8_t wait);
     void Dash(int r, int g, int b);
     void initPattern(uint8_t pattern);
-    void Pulse(int r, int g, int b);
-    void Rainbow1();
+    //void Pulse(int r, int g, int b);
+    //void Rainbow1();
     void Rainbow2();
     void Rainbow3();
     void resetWheel();
     void Twinkle();
-    void Tracer(int r, int g, int b);
+    //void Tracer(int r, int g, int b);
     void Tracer2(int r, int g, int b);
 };
 

@@ -1,7 +1,7 @@
 #ifndef ButtonInput_h
 #define ButtonInput_h
 
-#define BUTTON D0
+#define BUTTON 2
 
 class ButtonInput
 {
