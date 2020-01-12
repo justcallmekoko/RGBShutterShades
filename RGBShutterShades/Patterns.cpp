@@ -246,6 +246,51 @@ void Patterns::initPattern(uint8_t pattern)
     this->fadeRate = 0.90;
     this->bitRace();
   }
+  else if (pattern == XS)
+  {
+    this->Xs();
+  }
+  else if (pattern == HEARTS)
+  {
+    this->Hearts();
+  }
+}
+
+void Patterns::Hearts()
+{
+  strip.setPixelColor(60, 255, 0, 100);
+  strip.setPixelColor(55, 255, 0, 100);
+  strip.setPixelColor(54, 255, 0, 100);
+  strip.setPixelColor(53, 255, 0, 100);
+  strip.setPixelColor(31, 255, 0, 100);
+  strip.setPixelColor(32, 255, 0, 100);
+  strip.setPixelColor(33, 255, 0, 100);
+  strip.setPixelColor(34, 255, 0, 100);
+  strip.setPixelColor(35, 255, 0, 100);
+  strip.setPixelColor(24, 255, 0, 100);
+  strip.setPixelColor(25, 255, 0, 100);
+  strip.setPixelColor(26, 255, 0, 100);
+  strip.setPixelColor(27, 255, 0, 100);
+  strip.setPixelColor(28, 255, 0, 100);
+  strip.setPixelColor(1, 255, 0, 100);
+  strip.setPixelColor(3, 255, 0, 100);
+  strip.setPixelColor(65, 255, 0, 100);
+  strip.setPixelColor(48, 255, 0, 100);
+  strip.setPixelColor(47, 255, 0, 100);
+  strip.setPixelColor(46, 255, 0, 100);
+  strip.setPixelColor(42, 255, 0, 100);
+  strip.setPixelColor(41, 255, 0, 100);
+  strip.setPixelColor(40, 255, 0, 100);
+  strip.setPixelColor(39, 255, 0, 100);
+  strip.setPixelColor(38, 255, 0, 100);
+  strip.setPixelColor(19, 255, 0, 100);
+  strip.setPixelColor(18, 255, 0, 100);
+  strip.setPixelColor(17, 255, 0, 100);
+  strip.setPixelColor(16, 255, 0, 100);
+  strip.setPixelColor(15, 255, 0, 100);
+  strip.setPixelColor(10, 255, 0, 100);
+  strip.setPixelColor(12, 255, 0, 100);
+  strip.show();
 }
 
 /*
@@ -598,6 +643,29 @@ void Patterns::Tracer2(int r, int g, int b)
     
     //delay(10);
   }
+}
+
+void Patterns::Xs()
+{
+  strip.setPixelColor(0, 255, 0, 0);
+  strip.setPixelColor(27, 255, 0, 0);
+  strip.setPixelColor(33, 255, 0, 0);
+  strip.setPixelColor(53, 255, 0, 0);
+  strip.setPixelColor(62, 255, 0, 0);
+  strip.setPixelColor(58, 255, 0, 0);
+  strip.setPixelColor(55, 255, 0, 0);
+  strip.setPixelColor(25, 255, 0, 0);
+  strip.setPixelColor(4, 255, 0, 0);
+  strip.setPixelColor(63, 255, 0, 0);
+  strip.setPixelColor(48, 255, 0, 0);
+  strip.setPixelColor(40, 255, 0, 0);
+  strip.setPixelColor(16, 255, 0, 0);
+  strip.setPixelColor(13, 255, 0, 0);
+  strip.setPixelColor(9, 255, 0, 0);
+  strip.setPixelColor(18, 255, 0, 0);
+  strip.setPixelColor(46, 255, 0, 0);
+  strip.setPixelColor(67, 255, 0, 0);
+  strip.show();
 }
 
 uint32_t Patterns::Wheel(byte WheelPos) {

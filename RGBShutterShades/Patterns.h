@@ -15,7 +15,7 @@
 #define VIRTUAL_NUM_LEDS (matrix_x * matrix_y)
 
 
-#define NUM_PATTERN 6
+#define NUM_PATTERN 8
 
 // Pattern definitions
 #define DASH 0
@@ -25,6 +25,8 @@
 #define TWINKLE 3
 #define TRACER 4
 #define BIT_RACE 5
+#define XS 6
+#define HEARTS 7
 
 extern Adafruit_NeoPixel strip;
 extern XYmap mapObj;
@@ -74,10 +76,12 @@ class Patterns
     void initPattern(uint8_t pattern);
     //void Pulse(int r, int g, int b);
     //void Rainbow1();
+    void Hearts();
     void Rainbow2();
     void Rainbow3();
     void resetWheel();
     void Twinkle();
+    void Xs();
     //void Tracer(int r, int g, int b);
     void Tracer2(int r, int g, int b);
 };
